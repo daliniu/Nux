@@ -1,4 +1,7 @@
 *.[oa]
+*.lo
+*.so
+*.dll
 *Server
 *Client
 CMakeCache.txt
