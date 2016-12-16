@@ -52,3 +52,8 @@ add_executable(TutorialClient CppClient.cpp)
 target_link_libraries(TutorialClient tutorialgencpp)
 #LINK_AGAINST_THRIFT_LIBRARY(TutorialClient thrift)
 target_link_libraries(TutorialClient ${ZLIB_LIBRARIES})
+
+
+install (TARGETS TutorialClient DESTINATION bin)
+install (TARGETS TutorialServer DESTINATION bin)
+
