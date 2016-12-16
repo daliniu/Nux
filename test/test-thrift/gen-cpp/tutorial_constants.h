@@ -4,22 +4,22 @@
  * DO NOT EDIT UNLESS YOU ARE SURE THAT YOU KNOW WHAT YOU ARE DOING
  *  @generated
  */
-#ifndef test_CONSTANTS_H
-#define test_CONSTANTS_H
+#ifndef tutorial_CONSTANTS_H
+#define tutorial_CONSTANTS_H
 
-#include "test_types.h"
+#include "tutorial_types.h"
 
 namespace tutorial {
 
-class testConstants {
+class tutorialConstants {
  public:
-  testConstants();
+  tutorialConstants();
 
   int32_t INT32CONSTANT;
   std::map<std::string, std::string>  MAPCONSTANT;
 };
 
-extern const testConstants g_test_constants;
+extern const tutorialConstants g_tutorial_constants;
 
 } // namespace
 

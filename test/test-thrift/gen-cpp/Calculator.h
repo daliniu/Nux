@@ -9,7 +9,7 @@
 
 #include <thrift/TDispatchProcessor.h>
 #include <thrift/async/TConcurrentClientSyncInfo.h>
-#include "test_types.h"
+#include "tutorial_types.h"
 #include "SharedService.h"
 
 namespace tutorial {
@@ -22,9 +22,22 @@ namespace tutorial {
 class CalculatorIf : virtual public  ::shared::SharedServiceIf {
  public:
   virtual ~CalculatorIf() {}
+
+  /**
+   * A method definition looks like C code. It has a return type, arguments,
+   * and optionally a list of exceptions that it may throw. Note that argument
+   * lists and exception lists are specified using the exact same syntax as
+   * field lists in struct or exception definitions.
+   */
   virtual void ping() = 0;
   virtual int32_t add(const int32_t num1, const int32_t num2) = 0;
   virtual int32_t calculate(const int32_t logid, const Work& w) = 0;
+
+  /**
+   * This method has a oneway modifier. That means the client only makes
+   * a request and does not listen for any response at all. Oneway methods
+   * must be void.
+   */
   virtual void zip() = 0;
 };
 

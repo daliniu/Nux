@@ -4,7 +4,7 @@
  * DO NOT EDIT UNLESS YOU ARE SURE THAT YOU KNOW WHAT YOU ARE DOING
  *  @generated
  */
-#include "test_types.h"
+#include "tutorial_types.h"
 
 #include <algorithm>
 #include <ostream>

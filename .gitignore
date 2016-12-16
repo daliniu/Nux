@@ -1,0 +1,6 @@
+*.[oa]
+*Server
+*Client
+CMakeCache.txt
+cmake_install.cmake
+CMakeFiles
