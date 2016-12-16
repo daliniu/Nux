@@ -2,6 +2,8 @@
 *.lo
 *.so
 *.dll
+*.deps
+*.libs
 *Server
 *Client
 CMakeCache.txt
