@@ -7,7 +7,13 @@
 #ifndef SharedService_H
 #define SharedService_H
 
+#include <thrift/transport/TBufferTransports.h>
+#include <thrift/cxxfunctional.h>
+namespace apache { namespace thrift { namespace async {
+class TAsyncChannel;
+}}}
 #include <thrift/TDispatchProcessor.h>
+#include <thrift/async/TAsyncDispatchProcessor.h>
 #include <thrift/async/TConcurrentClientSyncInfo.h>
 #include "shared_types.h"
 
@@ -157,6 +163,7 @@ class SharedService_getStruct_presult {
   _SharedService_getStruct_presult__isset __isset;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
 };
 
@@ -285,6 +292,112 @@ class SharedServiceConcurrentClient : virtual public SharedServiceIf {
   ::apache::thrift::protocol::TProtocol* iprot_;
   ::apache::thrift::protocol::TProtocol* oprot_;
   ::apache::thrift::async::TConcurrentClientSyncInfo sync_;
+};
+
+class SharedServiceCobClient;
+
+class SharedServiceCobClIf {
+ public:
+  virtual ~SharedServiceCobClIf() {}
+  virtual void getStruct(tcxx::function<void(SharedServiceCobClient* client)> cob, const int32_t key) = 0;
+};
+
+class SharedServiceCobSvIf {
+ public:
+  virtual ~SharedServiceCobSvIf() {}
+  virtual void getStruct(tcxx::function<void(SharedStruct const& _return)> cob, const int32_t key) = 0;
+};
+
+class SharedServiceCobSvIfFactory {
+ public:
+  typedef SharedServiceCobSvIf Handler;
+
+  virtual ~SharedServiceCobSvIfFactory() {}
+
+  virtual SharedServiceCobSvIf* getHandler(const ::apache::thrift::TConnectionInfo& connInfo) = 0;
+  virtual void releaseHandler(SharedServiceCobSvIf* /* handler */) = 0;
+};
+
+class SharedServiceCobSvIfSingletonFactory : virtual public SharedServiceCobSvIfFactory {
+ public:
+  SharedServiceCobSvIfSingletonFactory(const boost::shared_ptr<SharedServiceCobSvIf>& iface) : iface_(iface) {}
+  virtual ~SharedServiceCobSvIfSingletonFactory() {}
+
+  virtual SharedServiceCobSvIf* getHandler(const ::apache::thrift::TConnectionInfo&) {
+    return iface_.get();
+  }
+  virtual void releaseHandler(SharedServiceCobSvIf* /* handler */) {}
+
+ protected:
+  boost::shared_ptr<SharedServiceCobSvIf> iface_;
+};
+
+class SharedServiceCobSvNull : virtual public SharedServiceCobSvIf {
+ public:
+  virtual ~SharedServiceCobSvNull() {}
+  void getStruct(tcxx::function<void(SharedStruct const& _return)> cob, const int32_t /* key */) {
+    SharedStruct _return;
+    return cob(_return);
+  }
+};
+
+class SharedServiceCobClient : virtual public SharedServiceCobClIf {
+ public:
+  SharedServiceCobClient(boost::shared_ptr< ::apache::thrift::async::TAsyncChannel> channel, ::apache::thrift::protocol::TProtocolFactory* protocolFactory) :
+    channel_(channel),
+    itrans_(new ::apache::thrift::transport::TMemoryBuffer()),
+    otrans_(new ::apache::thrift::transport::TMemoryBuffer()),
+    piprot_(protocolFactory->getProtocol(itrans_)),
+    poprot_(protocolFactory->getProtocol(otrans_)) {
+    iprot_ = piprot_.get();
+    oprot_ = poprot_.get();
+  }
+  boost::shared_ptr< ::apache::thrift::async::TAsyncChannel> getChannel() {
+    return channel_;
+  }
+  virtual void completed__(bool /* success */) {}
+  void getStruct(tcxx::function<void(SharedServiceCobClient* client)> cob, const int32_t key);
+  void send_getStruct(const int32_t key);
+  void recv_getStruct(SharedStruct& _return);
+ protected:
+  boost::shared_ptr< ::apache::thrift::async::TAsyncChannel> channel_;
+  boost::shared_ptr< ::apache::thrift::transport::TMemoryBuffer> itrans_;
+  boost::shared_ptr< ::apache::thrift::transport::TMemoryBuffer> otrans_;
+  boost::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
+  boost::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot_;
+  ::apache::thrift::protocol::TProtocol* iprot_;
+  ::apache::thrift::protocol::TProtocol* oprot_;
+};
+
+class SharedServiceAsyncProcessor : public ::apache::thrift::async::TAsyncDispatchProcessor {
+ protected:
+  boost::shared_ptr<SharedServiceCobSvIf> iface_;
+  virtual void dispatchCall(tcxx::function<void(bool ok)> cob, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, const std::string& fname, int32_t seqid);
+ private:
+  typedef  void (SharedServiceAsyncProcessor::*ProcessFunction)(tcxx::function<void(bool ok)>, int32_t, ::apache::thrift::protocol::TProtocol*, ::apache::thrift::protocol::TProtocol*);
+  typedef std::map<std::string, ProcessFunction> ProcessMap;
+  ProcessMap processMap_;
+  void process_getStruct(tcxx::function<void(bool ok)> cob, int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot);
+  void return_getStruct(tcxx::function<void(bool ok)> cob, int32_t seqid, ::apache::thrift::protocol::TProtocol* oprot, void* ctx, const SharedStruct& _return);
+  void throw_getStruct(tcxx::function<void(bool ok)> cob, int32_t seqid, ::apache::thrift::protocol::TProtocol* oprot, void* ctx, ::apache::thrift::TDelayedException* _throw);
+ public:
+  SharedServiceAsyncProcessor(boost::shared_ptr<SharedServiceCobSvIf> iface) :
+    iface_(iface) {
+    processMap_["getStruct"] = &SharedServiceAsyncProcessor::process_getStruct;
+  }
+
+  virtual ~SharedServiceAsyncProcessor() {}
+};
+
+class SharedServiceAsyncProcessorFactory : public ::apache::thrift::async::TAsyncProcessorFactory {
+ public:
+  SharedServiceAsyncProcessorFactory(const ::boost::shared_ptr< SharedServiceCobSvIfFactory >& handlerFactory) :
+      handlerFactory_(handlerFactory) {}
+
+  ::boost::shared_ptr< ::apache::thrift::async::TAsyncProcessor > getProcessor(const ::apache::thrift::TConnectionInfo& connInfo);
+
+ protected:
+  ::boost::shared_ptr< SharedServiceCobSvIfFactory > handlerFactory_;
 };
 
 #ifdef _WIN32
