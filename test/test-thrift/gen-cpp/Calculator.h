@@ -7,7 +7,13 @@
 #ifndef Calculator_H
 #define Calculator_H
 
+#include <thrift/transport/TBufferTransports.h>
+#include <thrift/cxxfunctional.h>
+namespace apache { namespace thrift { namespace async {
+class TAsyncChannel;
+}}}
 #include <thrift/TDispatchProcessor.h>
+#include <thrift/async/TAsyncDispatchProcessor.h>
 #include <thrift/async/TConcurrentClientSyncInfo.h>
 #include "tutorial_types.h"
 #include "SharedService.h"
@@ -155,6 +161,7 @@ class Calculator_ping_presult {
   virtual ~Calculator_ping_presult() throw();
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
 };
 
@@ -266,6 +273,7 @@ class Calculator_add_presult {
   _Calculator_add_presult__isset __isset;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
 };
 
@@ -385,6 +393,7 @@ class Calculator_calculate_presult {
   _Calculator_calculate_presult__isset __isset;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
 };
 
@@ -565,6 +574,160 @@ class CalculatorConcurrentClient : virtual public CalculatorIf, public  ::shared
   int32_t recv_calculate(const int32_t seqid);
   void zip();
   void send_zip();
+};
+
+class CalculatorCobClient;
+
+class CalculatorCobClIf : virtual public  ::shared::SharedServiceCobClIf {
+ public:
+  virtual ~CalculatorCobClIf() {}
+
+  /**
+   * A method definition looks like C code. It has a return type, arguments,
+   * and optionally a list of exceptions that it may throw. Note that argument
+   * lists and exception lists are specified using the exact same syntax as
+   * field lists in struct or exception definitions.
+   */
+  virtual void ping(tcxx::function<void(CalculatorCobClient* client)> cob) = 0;
+  virtual void add(tcxx::function<void(CalculatorCobClient* client)> cob, const int32_t num1, const int32_t num2) = 0;
+  virtual void calculate(tcxx::function<void(CalculatorCobClient* client)> cob, const int32_t logid, const Work& w) = 0;
+
+  /**
+   * This method has a oneway modifier. That means the client only makes
+   * a request and does not listen for any response at all. Oneway methods
+   * must be void.
+   */
+  virtual void zip(tcxx::function<void(CalculatorCobClient* client)> cob) = 0;
+};
+
+class CalculatorCobSvIf : virtual public  ::shared::SharedServiceCobSvIf {
+ public:
+  virtual ~CalculatorCobSvIf() {}
+
+  /**
+   * A method definition looks like C code. It has a return type, arguments,
+   * and optionally a list of exceptions that it may throw. Note that argument
+   * lists and exception lists are specified using the exact same syntax as
+   * field lists in struct or exception definitions.
+   */
+  virtual void ping(tcxx::function<void()> cob) = 0;
+  virtual void add(tcxx::function<void(int32_t const& _return)> cob, const int32_t num1, const int32_t num2) = 0;
+  virtual void calculate(tcxx::function<void(int32_t const& _return)> cob, tcxx::function<void(::apache::thrift::TDelayedException* _throw)> /* exn_cob */, const int32_t logid, const Work& w) = 0;
+
+  /**
+   * This method has a oneway modifier. That means the client only makes
+   * a request and does not listen for any response at all. Oneway methods
+   * must be void.
+   */
+  virtual void zip(tcxx::function<void()> cob) = 0;
+};
+
+class CalculatorCobSvIfFactory : virtual public  ::shared::SharedServiceCobSvIfFactory {
+ public:
+  typedef CalculatorCobSvIf Handler;
+
+  virtual ~CalculatorCobSvIfFactory() {}
+
+  virtual CalculatorCobSvIf* getHandler(const ::apache::thrift::TConnectionInfo& connInfo) = 0;
+  virtual void releaseHandler( ::shared::SharedServiceCobSvIf* /* handler */) = 0;
+};
+
+class CalculatorCobSvIfSingletonFactory : virtual public CalculatorCobSvIfFactory {
+ public:
+  CalculatorCobSvIfSingletonFactory(const boost::shared_ptr<CalculatorCobSvIf>& iface) : iface_(iface) {}
+  virtual ~CalculatorCobSvIfSingletonFactory() {}
+
+  virtual CalculatorCobSvIf* getHandler(const ::apache::thrift::TConnectionInfo&) {
+    return iface_.get();
+  }
+  virtual void releaseHandler( ::shared::SharedServiceCobSvIf* /* handler */) {}
+
+ protected:
+  boost::shared_ptr<CalculatorCobSvIf> iface_;
+};
+
+class CalculatorCobSvNull : virtual public CalculatorCobSvIf , virtual public  ::shared::SharedServiceCobSvNull {
+ public:
+  virtual ~CalculatorCobSvNull() {}
+  void ping(tcxx::function<void()> cob) {
+    return cob();
+  }
+  void add(tcxx::function<void(int32_t const& _return)> cob, const int32_t /* num1 */, const int32_t /* num2 */) {
+    int32_t _return = 0;
+    return cob(_return);
+  }
+  void calculate(tcxx::function<void(int32_t const& _return)> cob, tcxx::function<void(::apache::thrift::TDelayedException* _throw)> /* exn_cob */, const int32_t /* logid */, const Work& /* w */) {
+    int32_t _return = 0;
+    return cob(_return);
+  }
+  void zip(tcxx::function<void()> cob) {
+    return cob();
+  }
+};
+
+class CalculatorCobClient : virtual public CalculatorCobClIf, public  ::shared::SharedServiceCobClient {
+ public:
+  CalculatorCobClient(boost::shared_ptr< ::apache::thrift::async::TAsyncChannel> channel, ::apache::thrift::protocol::TProtocolFactory* protocolFactory) :
+     ::shared::SharedServiceCobClient(channel, protocolFactory) {}
+  boost::shared_ptr< ::apache::thrift::async::TAsyncChannel> getChannel() {
+    return channel_;
+  }
+  virtual void completed__(bool /* success */) {}
+  void ping(tcxx::function<void(CalculatorCobClient* client)> cob);
+  void send_ping();
+  void recv_ping();
+  void add(tcxx::function<void(CalculatorCobClient* client)> cob, const int32_t num1, const int32_t num2);
+  void send_add(const int32_t num1, const int32_t num2);
+  int32_t recv_add();
+  void calculate(tcxx::function<void(CalculatorCobClient* client)> cob, const int32_t logid, const Work& w);
+  void send_calculate(const int32_t logid, const Work& w);
+  int32_t recv_calculate();
+  void zip(tcxx::function<void(CalculatorCobClient* client)> cob);
+  void send_zip();
+};
+
+class CalculatorAsyncProcessor : public  ::shared::SharedServiceAsyncProcessor {
+ protected:
+  boost::shared_ptr<CalculatorCobSvIf> iface_;
+  virtual void dispatchCall(tcxx::function<void(bool ok)> cob, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, const std::string& fname, int32_t seqid);
+ private:
+  typedef  void (CalculatorAsyncProcessor::*ProcessFunction)(tcxx::function<void(bool ok)>, int32_t, ::apache::thrift::protocol::TProtocol*, ::apache::thrift::protocol::TProtocol*);
+  typedef std::map<std::string, ProcessFunction> ProcessMap;
+  ProcessMap processMap_;
+  void process_ping(tcxx::function<void(bool ok)> cob, int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot);
+  void return_ping(tcxx::function<void(bool ok)> cob, int32_t seqid, ::apache::thrift::protocol::TProtocol* oprot, void* ctx);
+  void throw_ping(tcxx::function<void(bool ok)> cob, int32_t seqid, ::apache::thrift::protocol::TProtocol* oprot, void* ctx, ::apache::thrift::TDelayedException* _throw);
+  void process_add(tcxx::function<void(bool ok)> cob, int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot);
+  void return_add(tcxx::function<void(bool ok)> cob, int32_t seqid, ::apache::thrift::protocol::TProtocol* oprot, void* ctx, const int32_t& _return);
+  void throw_add(tcxx::function<void(bool ok)> cob, int32_t seqid, ::apache::thrift::protocol::TProtocol* oprot, void* ctx, ::apache::thrift::TDelayedException* _throw);
+  void process_calculate(tcxx::function<void(bool ok)> cob, int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot);
+  void return_calculate(tcxx::function<void(bool ok)> cob, int32_t seqid, ::apache::thrift::protocol::TProtocol* oprot, void* ctx, const int32_t& _return);
+  void throw_calculate(tcxx::function<void(bool ok)> cob, int32_t seqid, ::apache::thrift::protocol::TProtocol* oprot, void* ctx, ::apache::thrift::TDelayedException* _throw);
+  void process_zip(tcxx::function<void(bool ok)> cob, int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot);
+  void return_zip(tcxx::function<void(bool ok)> cob, int32_t seqid, ::apache::thrift::protocol::TProtocol* oprot, void* ctx);
+  void throw_zip(tcxx::function<void(bool ok)> cob, int32_t seqid, ::apache::thrift::protocol::TProtocol* oprot, void* ctx, ::apache::thrift::TDelayedException* _throw);
+ public:
+  CalculatorAsyncProcessor(boost::shared_ptr<CalculatorCobSvIf> iface) :
+     ::shared::SharedServiceAsyncProcessor(iface),
+    iface_(iface) {
+    processMap_["ping"] = &CalculatorAsyncProcessor::process_ping;
+    processMap_["add"] = &CalculatorAsyncProcessor::process_add;
+    processMap_["calculate"] = &CalculatorAsyncProcessor::process_calculate;
+    processMap_["zip"] = &CalculatorAsyncProcessor::process_zip;
+  }
+
+  virtual ~CalculatorAsyncProcessor() {}
+};
+
+class CalculatorAsyncProcessorFactory : public ::apache::thrift::async::TAsyncProcessorFactory {
+ public:
+  CalculatorAsyncProcessorFactory(const ::boost::shared_ptr< CalculatorCobSvIfFactory >& handlerFactory) :
+      handlerFactory_(handlerFactory) {}
+
+  ::boost::shared_ptr< ::apache::thrift::async::TAsyncProcessor > getProcessor(const ::apache::thrift::TConnectionInfo& connInfo);
+
+ protected:
+  ::boost::shared_ptr< CalculatorCobSvIfFactory > handlerFactory_;
 };
 
 #ifdef _WIN32
