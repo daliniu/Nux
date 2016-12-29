@@ -40,6 +40,7 @@
 
 using namespace std;
 using namespace apache::thrift;
+using namespace apache::thrift::async;
 using namespace apache::thrift::concurrency;
 using namespace apache::thrift::protocol;
 using namespace apache::thrift::transport;
@@ -112,10 +113,10 @@ protected:
 class CalculatorAsyncHandler : public CalculatorCobSvIf {
 public:
 	CalculatorAsyncHandler() {
-		syncHandler_ = std::auto_ptr<CalculatorHandler>(new CalculatorHandler);
+		syncHandler_ = boost::shared_ptr<CalculatorHandler>(new CalculatorHandler);
 		// Your initialization goes here
 	}
-	virtual ~CalculatorAsyncHandler();
+	//virtual ~CalculatorAsyncHandler();
 
 	void ping(tcxx::function<void()> cob) {
 		syncHandler_->ping();
@@ -144,7 +145,7 @@ public:
 		return cob(_return);
 	}
 protected:
-	std::auto_ptr<CalculatorHandler> syncHandler_;
+	boost::shared_ptr<CalculatorHandler> syncHandler_;
 };
 
 /*
@@ -215,7 +216,7 @@ int main() {
     threadManager);
   */
 
-	boost::shared_ptr<TAsyncProcessor> underlying_pro(new CalculatorAsyncProcessor(boost::shared_ptr<CalculatorCobSvIf>(new CalculatorAsyncHandler())));
+	boost::shared_ptr<TAsyncProcessor> underlying_pro(new CalculatorAsyncProcessor(boost::shared_ptr<CalculatorCobSvIf>(new CalculatorAsyncHandler)));
 	boost::shared_ptr<TAsyncBufferProcessor> processor(new TAsyncProtocolProcessor(underlying_pro, boost::shared_ptr<TProtocolFactory>(new TBinaryProtocolFactory())));
 
 	TEvhttpServer server(processor, 9090);
