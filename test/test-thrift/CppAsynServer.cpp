@@ -27,6 +27,8 @@
 #include <thrift/transport/TSocket.h>
 #include <thrift/transport/TTransportUtils.h>
 #include <thrift/TToString.h>
+#include <thrift/async/TAsyncProtocolProcessor.h>
+#include <thrift/async/TEvhttpServer.h>
 
 #include <boost/make_shared.hpp>
 
@@ -107,6 +109,44 @@ protected:
   map<int32_t, SharedStruct> log;
 };
 
+class CalculatorAsyncHandler : public CalculatorCobSvIf {
+public:
+	CalculatorAsyncHandler() {
+		syncHandler_ = std::auto_ptr<CalculatorHandler>(new CalculatorHandler);
+		// Your initialization goes here
+	}
+	virtual ~CalculatorAsyncHandler();
+
+	void ping(tcxx::function<void()> cob) {
+		syncHandler_->ping();
+		return cob();
+	}
+
+	void add(tcxx::function<void(int32_t const& _return)> cob, const int32_t num1, const int32_t num2) {
+		int32_t _return = 0;
+		_return = syncHandler_->add(num1, num2);
+		return cob(_return);
+	}
+
+	void calculate(tcxx::function<void(int32_t const& _return)> cob, tcxx::function<void(::apache::thrift::TDelayedException* _throw)> /* exn_cob */, const int32_t logid, const Work& w) {
+		int32_t _return = 0;
+		_return = syncHandler_->calculate(logid, w);
+		return cob(_return);
+	}
+
+	void zip(tcxx::function<void()> cob) {
+		syncHandler_->zip();
+		return cob();
+	}
+	void getStruct(tcxx::function<void(SharedStruct const& _return)> cob, const int32_t key) {
+		SharedStruct _return;
+		syncHandler_->getStruct(_return, key);
+		return cob(_return);
+	}
+protected:
+	std::auto_ptr<CalculatorHandler> syncHandler_;
+};
+
 /*
   CalculatorIfFactory is code generated.
   CalculatorCloneFactory is useful for getting access to the server side of the
@@ -132,12 +172,13 @@ class CalculatorCloneFactory : virtual public CalculatorIfFactory {
 };
 
 int main() {
+	  /*
   TThreadedServer server(
     boost::make_shared<CalculatorProcessorFactory>(boost::make_shared<CalculatorCloneFactory>()),
     boost::make_shared<TServerSocket>(9090), //port
     boost::make_shared<TBufferedTransportFactory>(),
     boost::make_shared<TBinaryProtocolFactory>());
-
+*/
   /*
   // if you don't need per-connection state, do the following instead
   TThreadedServer server(
@@ -173,6 +214,11 @@ int main() {
     boost::make_shared<TBinaryProtocolFactory>(),
     threadManager);
   */
+
+	boost::shared_ptr<TAsyncProcessor> underlying_pro(new CalculatorAsyncProcessor(boost::shared_ptr<CalculatorCobSvIf>(new CalculatorAsyncHandler())));
+	boost::shared_ptr<TAsyncBufferProcessor> processor(new TAsyncProtocolProcessor(underlying_pro, boost::shared_ptr<TProtocolFactory>(new TBinaryProtocolFactory())));
+
+	TEvhttpServer server(processor, 9090);
 
   cout << "Starting the server..." << endl;
   server.serve();
