@@ -56,8 +56,17 @@ target_link_libraries(TutorialClient ${ZLIB_LIBRARIES})
 
 add_executable(TutorialAsynClient CppAsynClient.cpp)
 target_link_libraries(TutorialAsynClient tutorialgencpp)
+target_link_libraries(TutorialAsynClient thriftnb)
+target_link_libraries(TutorialAsynClient event)
 #LINK_AGAINST_THRIFT_LIBRARY(TutorialClient thrift)
 target_link_libraries(TutorialAsynClient ${ZLIB_LIBRARIES})
+
+add_executable(TutorialAsynServer CppAsynServer.cpp)
+target_link_libraries(TutorialAsynServer tutorialgencpp)
+target_link_libraries(TutorialAsynServer thriftnb)
+target_link_libraries(TutorialAsynServer event)
+#LINK_AGAINST_THRIFT_LIBRARY(TutorialClient thrift)
+target_link_libraries(TutorialAsynServer ${ZLIB_LIBRARIES})
 
 install (TARGETS TutorialClient DESTINATION bin)
 install (TARGETS TutorialServer DESTINATION bin)

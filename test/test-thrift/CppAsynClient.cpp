@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include <evhttp.h>
 #include <thrift/protocol/TBinaryProtocol.h>
 #include <thrift/transport/TSocket.h>
 #include <thrift/transport/TTransportUtils.h>
@@ -9,6 +10,7 @@
 
 using namespace std;
 using namespace apache::thrift;
+using namespace apache::thrift::async;
 using namespace apache::thrift::protocol;
 using namespace apache::thrift::transport;
 
