@@ -19,6 +19,7 @@
 cmake_minimum_required(VERSION 3.7)
 find_package(Boost 1.53.0 REQUIRED)
 include_directories(SYSTEM "${Boost_INCLUDE_DIRS}")
+SET(CMAKE_CXX_COMPILER "g++")
 
 #Make sure gen-cpp files can be included
 include_directories("${CMAKE_CURRENT_BINARY_DIR}")
