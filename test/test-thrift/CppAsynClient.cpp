@@ -3,6 +3,7 @@
 #include <thrift/protocol/TBinaryProtocol.h>
 #include <thrift/transport/TSocket.h>
 #include <thrift/transport/TTransportUtils.h>
+#include <thrift/async/TEvhttpClientChannel.h>
 
 #include "gen-cpp/Calculator.h"
 
@@ -18,36 +19,28 @@ int main() {
   boost::shared_ptr<TTransport> socket(new TSocket("localhost", 9090));
   boost::shared_ptr<TTransport> transport(new TBufferedTransport(socket));
   boost::shared_ptr<TProtocol> protocol(new TBinaryProtocol(transport));
-  CalculatorClient client(protocol);
+  event_base* base = event_base_new();
+  boost::shared_ptr< ::apache::thrift::async::TAsyncChannel>  channel(new TEvhttpClientChannel("localhost", "/", "localhost", 9090, base));
+
+  CalculatorCobClient client(channel, new TBinaryProtocolFactory());
 
   try {
-    transport->open();
-
-    client.ping();
-    cout << "ping()" << endl;
-
-    cout << "1 + 1 = " << client.add(1, 1) << endl;
-
+	function<void(CalculatorCobClient* client)> cob = [](CalculatorCobClient* client) {
+		int diff = client->recv_calculate();
+		cout << "15 - 10 = " << diff << endl;
+	};
     Work work;
-    work.op = Operation::DIVIDE;
-    work.num1 = 1;
-    work.num2 = 0;
-
-    try {
-      client.calculate(1, work);
-      cout << "Whoa? We can divide by zero!" << endl;
-    } catch (InvalidOperation& io) {
-      cout << "InvalidOperation: " << io.why << endl;
-      // or using generated operator<<: cout << io << endl;
-      // or by using std::exception native method what(): cout << io.what() << endl;
-    }
-
     work.op = Operation::SUBTRACT;
     work.num1 = 15;
     work.num2 = 10;
-    int32_t diff = client.calculate(1, work);
-    cout << "15 - 10 = " << diff << endl;
 
+	client.calculate(cob, 1, work);
+
+	event_base_dispatch(base);
+
+	event_base_free(base);
+
+	/*
     // Note that C++ uses return by reference for complex types to avoid
     // costly copy construction
     SharedStruct ss;
@@ -55,6 +48,7 @@ int main() {
     cout << "Received log: " << ss << endl;
 
     transport->close();
+	*/
   } catch (TException& tx) {
     cout << "ERROR: " << tx.what() << endl;
   }
