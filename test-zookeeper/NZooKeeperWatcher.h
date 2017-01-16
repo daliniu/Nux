@@ -11,7 +11,6 @@
 #include "NObject.h"
 
 using namespace std;
-using namespace boost;
 
 namespace Nux {
 

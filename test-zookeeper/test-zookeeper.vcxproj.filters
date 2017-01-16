@@ -39,10 +39,25 @@
     <ClInclude Include="Executor.h">
       <Filter>源文件</Filter>
     </ClInclude>
-    <ClInclude Include="ServicesRegistry.h">
+    <ClInclude Include="ClusterManager.h">
       <Filter>源文件</Filter>
     </ClInclude>
-    <ClInclude Include="ClusterManager.h">
+    <ClInclude Include="NThreadObject.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="NServicesRegistry.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="NZooKeeperWatcher.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="NZooKeeper.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="NObject.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="NServerConfig.h">
       <Filter>源文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -56,7 +71,16 @@
     <ClCompile Include="Executor.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="ServicesRegistry.cpp">
+    <ClCompile Include="NServicesRegistry.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ZooKeeperClient.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="NZooKeeper.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="NServerConfig.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

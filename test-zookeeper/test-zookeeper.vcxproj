@@ -75,13 +75,21 @@
     <ClInclude Include="ClusterManager.h" />
     <ClInclude Include="DataMonitor.h" />
     <ClInclude Include="Executor.h" />
-    <ClInclude Include="ServicesRegistry.h" />
+    <ClInclude Include="NObject.h" />
+    <ClInclude Include="NServerConfig.h" />
+    <ClInclude Include="NServicesRegistry.h" />
+    <ClInclude Include="NThreadObject.h" />
+    <ClInclude Include="NZooKeeper.h" />
+    <ClInclude Include="NZooKeeperWatcher.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DataMonitor.cpp" />
     <ClCompile Include="Executor.cpp" />
-    <ClCompile Include="ServicesRegistry.cpp" />
+    <ClCompile Include="NServerConfig.cpp" />
+    <ClCompile Include="NServicesRegistry.cpp" />
     <ClCompile Include="test.cpp" />
+    <ClCompile Include="NZooKeeper.cpp" />
+    <ClCompile Include="ZooKeeperClient.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

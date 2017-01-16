@@ -1,0 +1,118 @@
+﻿生成启动时间为 2016/12/16 17:22:14。
+     1>项目“C:\Users\zys0633\Nux\Nux\Nux.vcxproj”在节点 2 上(Build 个目标)。
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ..\thrift\async\TAsyncChannel.cpp ..\thrift\async\TAsyncProtocolProcessor.cpp ..\thrift\async\TConcurrentClientSyncInfo.cpp ..\thrift\async\TEvhttpClientChannel.cpp ..\thrift\async\TEvhttpServer.cpp ..\thrift\concurrency\BoostMonitor.cpp ..\thrift\concurrency\BoostMutex.cpp ..\thrift\concurrency\BoostThreadFactory.cpp ..\thrift\concurrency\Monitor.cpp ..\thrift\concurrency\Mutex.cpp ..\thrift\concurrency\PosixThreadFactory.cpp ..\thrift\concurrency\StdMonitor.cpp ..\thrift\concurrency\StdMutex.cpp ..\thrift\concurrency\StdThreadFactory.cpp ..\thrift\concurrency\ThreadManager.cpp ..\thrift\concurrency\TimerManager.cpp ..\thrift\concurrency\Util.cpp ..\thrift\processor\PeekProcessor.cpp ..\thrift\protocol\TBase64Utils.cpp ..\thrift\protocol\TDebugProtocol.cpp ..\thrift\protocol\THeaderProtocol.cpp ..\thrift\protocol\TJSONProtocol.cpp ..\thrift\protocol\TMultiplexedProtocol.cpp ..\thrift\protocol\TProtocol.cpp ..\thrift\server\TConnectedClient.cpp ..\thrift\server\TNonblockingServer.cpp ..\thrift\server\TServer.cpp ..\thrift\server\TServerFramework.cpp ..\thrift\server\TSimpleServer.cpp ..\thrift\server\TThreadedServer.cpp ..\thrift\server\TThreadPoolServer.cpp ..\thrift\TApplicationException.cpp ..\thrift\TOutput.cpp ..\thrift\transport\TBufferTransports.cpp ..\thrift\transport\TFDTransport.cpp ..\thrift\transport\TFileTransport.cpp ..\thrift\transport\THeaderTransport.cpp ..\thrift\transport\THttpClient.cpp ..\thrift\transport\THttpServer.cpp ..\thrift\transport\THttpTransport.cpp ..\thrift\transport\TPipe.cpp ..\thrift\transport\TPipeServer.cpp ..\thrift\transport\TServerSocket.cpp ..\thrift\transport\TSimpleFileTransport.cpp ..\thrift\transport\TSocket.cpp ..\thrift\transport\TSocketPool.cpp ..\thrift\transport\TSSLServerSocket.cpp ..\thrift\transport\TSSLSocket.cpp ..\thrift\transport\TTransportException.cpp ..\thrift\transport\TTransportUtils.cpp ..\thrift\transport\TZlibTransport.cpp ..\thrift\VirtualProfiling.cpp
+         VirtualProfiling.cpp
+     1>c:\users\zys0633\nux\thrift\virtualprofiling.cpp(20): fatal error C1083: 无法打开包括文件: “thrift/Thrift.h”: No such file or directory
+         TZlibTransport.cpp
+     1>c:\users\zys0633\nux\thrift\transport\tzlibtransport.cpp(23): fatal error C1083: 无法打开包括文件: “thrift/transport/TZlibTransport.h”: No such file or directory
+         TTransportUtils.cpp
+     1>c:\users\zys0633\nux\thrift\transport\ttransportutils.cpp(20): fatal error C1083: 无法打开包括文件: “thrift/transport/TTransportUtils.h”: No such file or directory
+         TTransportException.cpp
+     1>c:\users\zys0633\nux\thrift\transport\ttransportexception.cpp(20): fatal error C1083: 无法打开包括文件: “thrift/transport/TTransportException.h”: No such file or directory
+         TSSLSocket.cpp
+     1>c:\users\zys0633\nux\thrift\transport\tsslsocket.cpp(20): fatal error C1083: 无法打开包括文件: “thrift/thrift-config.h”: No such file or directory
+         TSSLServerSocket.cpp
+     1>c:\users\zys0633\nux\thrift\transport\tsslserversocket.cpp(20): fatal error C1083: 无法打开包括文件: “thrift/transport/TSSLServerSocket.h”: No such file or directory
+         TSocketPool.cpp
+     1>c:\users\zys0633\nux\thrift\transport\tsocketpool.cpp(20): fatal error C1083: 无法打开包括文件: “thrift/thrift-config.h”: No such file or directory
+         TSocket.cpp
+     1>c:\users\zys0633\nux\thrift\transport\tsocket.cpp(20): fatal error C1083: 无法打开包括文件: “thrift/thrift-config.h”: No such file or directory
+         TSimpleFileTransport.cpp
+     1>c:\users\zys0633\nux\thrift\transport\tsimplefiletransport.cpp(20): fatal error C1083: 无法打开包括文件: “thrift/thrift-config.h”: No such file or directory
+         TServerSocket.cpp
+     1>c:\users\zys0633\nux\thrift\transport\tserversocket.cpp(20): fatal error C1083: 无法打开包括文件: “thrift/thrift-config.h”: No such file or directory
+         TPipeServer.cpp
+     1>c:\users\zys0633\nux\thrift\transport\tpipeserver.cpp(20): fatal error C1083: 无法打开包括文件: “thrift/thrift-config.h”: No such file or directory
+         TPipe.cpp
+     1>c:\users\zys0633\nux\thrift\transport\tpipe.cpp(20): fatal error C1083: 无法打开包括文件: “thrift/transport/TTransportException.h”: No such file or directory
+         THttpTransport.cpp
+     1>c:\users\zys0633\nux\thrift\transport\thttptransport.cpp(22): fatal error C1083: 无法打开包括文件: “thrift/transport/THttpTransport.h”: No such file or directory
+         THttpServer.cpp
+     1>c:\users\zys0633\nux\thrift\transport\thttpserver.cpp(24): fatal error C1083: 无法打开包括文件: “thrift/transport/THttpServer.h”: No such file or directory
+         THttpClient.cpp
+     1>c:\users\zys0633\nux\thrift\transport\thttpclient.cpp(23): fatal error C1083: 无法打开包括文件: “boost/algorithm/string.hpp”: No such file or directory
+         THeaderTransport.cpp
+     1>c:\users\zys0633\nux\thrift\transport\theadertransport.cpp(20): fatal error C1083: 无法打开包括文件: “thrift/transport/THeaderTransport.h”: No such file or directory
+         TFileTransport.cpp
+     1>c:\users\zys0633\nux\thrift\transport\tfiletransport.cpp(20): fatal error C1083: 无法打开包括文件: “thrift/thrift-config.h”: No such file or directory
+         TFDTransport.cpp
+     1>c:\users\zys0633\nux\thrift\transport\tfdtransport.cpp(23): fatal error C1083: 无法打开包括文件: “thrift/transport/TFDTransport.h”: No such file or directory
+         TBufferTransports.cpp
+     1>c:\users\zys0633\nux\thrift\transport\tbuffertransports.cpp(23): fatal error C1083: 无法打开包括文件: “thrift/transport/TBufferTransports.h”: No such file or directory
+         TOutput.cpp
+     1>c:\users\zys0633\nux\thrift\toutput.cpp(20): fatal error C1083: 无法打开包括文件: “thrift/Thrift.h”: No such file or directory
+         正在生成代码...
+         正在编译...
+         TApplicationException.cpp
+     1>c:\users\zys0633\nux\thrift\tapplicationexception.cpp(20): fatal error C1083: 无法打开包括文件: “thrift/TApplicationException.h”: No such file or directory
+         TThreadPoolServer.cpp
+     1>c:\users\zys0633\nux\thrift\server\tthreadpoolserver.cpp(20): fatal error C1083: 无法打开包括文件: “thrift/server/TThreadPoolServer.h”: No such file or directory
+         TThreadedServer.cpp
+     1>c:\users\zys0633\nux\thrift\server\tthreadedserver.cpp(20): fatal error C1083: 无法打开包括文件: “boost/bind.hpp”: No such file or directory
+         TSimpleServer.cpp
+     1>c:\users\zys0633\nux\thrift\server\tsimpleserver.cpp(20): fatal error C1083: 无法打开包括文件: “thrift/server/TSimpleServer.h”: No such file or directory
+         TServerFramework.cpp
+     1>c:\users\zys0633\nux\thrift\server\tserverframework.cpp(21): fatal error C1083: 无法打开包括文件: “boost/bind.hpp”: No such file or directory
+         TServer.cpp
+     1>c:\users\zys0633\nux\thrift\server\tserver.cpp(20): fatal error C1083: 无法打开包括文件: “thrift/thrift-config.h”: No such file or directory
+         TNonblockingServer.cpp
+     1>c:\users\zys0633\nux\thrift\server\tnonblockingserver.cpp(22): fatal error C1083: 无法打开包括文件: “thrift/thrift-config.h”: No such file or directory
+         TConnectedClient.cpp
+     1>c:\users\zys0633\nux\thrift\server\tconnectedclient.cpp(20): fatal error C1083: 无法打开包括文件: “thrift/server/TConnectedClient.h”: No such file or directory
+         TProtocol.cpp
+     1>c:\users\zys0633\nux\thrift\protocol\tprotocol.cpp(20): fatal error C1083: 无法打开包括文件: “thrift/protocol/TProtocol.h”: No such file or directory
+         TMultiplexedProtocol.cpp
+     1>c:\users\zys0633\nux\thrift\protocol\tmultiplexedprotocol.cpp(20): fatal error C1083: 无法打开包括文件: “thrift/protocol/TMultiplexedProtocol.h”: No such file or directory
+         TJSONProtocol.cpp
+     1>c:\users\zys0633\nux\thrift\protocol\tjsonprotocol.cpp(20): fatal error C1083: 无法打开包括文件: “thrift/protocol/TJSONProtocol.h”: No such file or directory
+         THeaderProtocol.cpp
+     1>c:\users\zys0633\nux\thrift\protocol\theaderprotocol.cpp(22): fatal error C1083: 无法打开包括文件: “thrift/protocol/THeaderProtocol.h”: No such file or directory
+         TDebugProtocol.cpp
+     1>c:\users\zys0633\nux\thrift\protocol\tdebugprotocol.cpp(20): fatal error C1083: 无法打开包括文件: “thrift/protocol/TDebugProtocol.h”: No such file or directory
+         TBase64Utils.cpp
+     1>c:\users\zys0633\nux\thrift\protocol\tbase64utils.cpp(20): fatal error C1083: 无法打开包括文件: “thrift/protocol/TBase64Utils.h”: No such file or directory
+         PeekProcessor.cpp
+     1>c:\users\zys0633\nux\thrift\processor\peekprocessor.cpp(20): fatal error C1083: 无法打开包括文件: “thrift/processor/PeekProcessor.h”: No such file or directory
+         Util.cpp
+     1>c:\users\zys0633\nux\thrift\concurrency\util.cpp(20): fatal error C1083: 无法打开包括文件: “thrift/thrift-config.h”: No such file or directory
+         TimerManager.cpp
+     1>c:\users\zys0633\nux\thrift\concurrency\timermanager.cpp(20): fatal error C1083: 无法打开包括文件: “thrift/concurrency/TimerManager.h”: No such file or directory
+         ThreadManager.cpp
+     1>c:\users\zys0633\nux\thrift\concurrency\threadmanager.cpp(20): fatal error C1083: 无法打开包括文件: “thrift/thrift-config.h”: No such file or directory
+         StdThreadFactory.cpp
+     1>c:\users\zys0633\nux\thrift\concurrency\stdthreadfactory.cpp(20): fatal error C1083: 无法打开包括文件: “thrift/thrift-config.h”: No such file or directory
+         StdMutex.cpp
+     1>c:\users\zys0633\nux\thrift\concurrency\stdmutex.cpp(20): fatal error C1083: 无法打开包括文件: “thrift/thrift-config.h”: No such file or directory
+         正在生成代码...
+         正在编译...
+         StdMonitor.cpp
+     1>c:\users\zys0633\nux\thrift\concurrency\stdmonitor.cpp(20): fatal error C1083: 无法打开包括文件: “thrift/thrift-config.h”: No such file or directory
+         PosixThreadFactory.cpp
+     1>c:\users\zys0633\nux\thrift\concurrency\posixthreadfactory.cpp(20): fatal error C1083: 无法打开包括文件: “thrift/thrift-config.h”: No such file or directory
+         Mutex.cpp
+     1>c:\users\zys0633\nux\thrift\concurrency\mutex.cpp(20): fatal error C1083: 无法打开包括文件: “thrift/thrift-config.h”: No such file or directory
+         Monitor.cpp
+     1>c:\users\zys0633\nux\thrift\concurrency\monitor.cpp(20): fatal error C1083: 无法打开包括文件: “thrift/thrift-config.h”: No such file or directory
+         BoostThreadFactory.cpp
+     1>c:\users\zys0633\nux\thrift\concurrency\boostthreadfactory.cpp(20): fatal error C1083: 无法打开包括文件: “thrift/thrift-config.h”: No such file or directory
+         BoostMutex.cpp
+     1>c:\users\zys0633\nux\thrift\concurrency\boostmutex.cpp(20): fatal error C1083: 无法打开包括文件: “thrift/thrift-config.h”: No such file or directory
+         BoostMonitor.cpp
+     1>c:\users\zys0633\nux\thrift\concurrency\boostmonitor.cpp(20): fatal error C1083: 无法打开包括文件: “thrift/thrift-config.h”: No such file or directory
+         TEvhttpServer.cpp
+     1>c:\users\zys0633\nux\thrift\async\tevhttpserver.cpp(20): fatal error C1083: 无法打开包括文件: “thrift/async/TEvhttpServer.h”: No such file or directory
+         TEvhttpClientChannel.cpp
+     1>c:\users\zys0633\nux\thrift\async\tevhttpclientchannel.cpp(20): fatal error C1083: 无法打开包括文件: “thrift/async/TEvhttpClientChannel.h”: No such file or directory
+         TConcurrentClientSyncInfo.cpp
+     1>c:\users\zys0633\nux\thrift\async\tconcurrentclientsyncinfo.cpp(20): fatal error C1083: 无法打开包括文件: “thrift/async/TConcurrentClientSyncInfo.h”: No such file or directory
+         TAsyncProtocolProcessor.cpp
+     1>c:\users\zys0633\nux\thrift\async\tasyncprotocolprocessor.cpp(20): fatal error C1083: 无法打开包括文件: “thrift/async/TAsyncProtocolProcessor.h”: No such file or directory
+         TAsyncChannel.cpp
+     1>c:\users\zys0633\nux\thrift\async\tasyncchannel.cpp(20): fatal error C1083: 无法打开包括文件: “thrift/async/TAsyncChannel.h”: No such file or directory
+         正在生成代码...
+     1>已完成生成项目“C:\Users\zys0633\Nux\Nux\Nux.vcxproj”(Build 个目标)的操作 - 失败。
+
+生成失败。
+
+已用时间 00:00:03.21

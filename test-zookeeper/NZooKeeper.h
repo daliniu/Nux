@@ -12,16 +12,15 @@
 #include "NZooKeeperWatcher.h"
 
 using namespace std;
-using namespace boost;
 
 namespace Nux {
 
-    typedef function<void *(int, ACL_vector*, Stat*)>                    AclCompletionType;
-    typedef function<void *(int, char const*, int, Stat const*)>         DataCompletionType;
-    typedef function<void *(int, Stat const*)>                          StatCompletionType;
-    typedef function<void *(int, char const*)>                           StringCompletionType;
-    typedef function<void *(int, String_vector const*)>                  StringsStatCompletionType;
-    typedef function<void *(int)>                                        VoidCompletionType;
+    typedef function<void (int, ACL_vector*, Stat*)>                    AclCompletionType;
+    typedef function<void (int, char const*, int, Stat const*)>         DataCompletionType;
+    typedef function<void (int, Stat const*)>                           StatCompletionType;
+    typedef function<void (int, char const*)>                           StringCompletionType;
+    typedef function<void (int, String_vector const*)>                  StringsStatCompletionType;
+    typedef function<void (int)>                                        VoidCompletionType;
 
     /*
     *
@@ -50,7 +49,8 @@ namespace Nux {
         void createNode(string const& path, char const* value);
         String_vector getChildren(string const& path);
         void asyncGetChildren(string const& path, StringsStatCompletionType const& callback);  // lambda expr
-
+        void asyncCreateNode(string const& path, char const* value, StringCompletionType const& callback); 
+        
         // callfunction interface
         AclCompletionType         AclCompletionCallback;
         DataCompletionType        DataCompletionCallback; 

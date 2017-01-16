@@ -113,8 +113,18 @@ namespace Nux {
     {
         int rc = zoo_create(m_ZkHandle, path.c_str(), value, sizeof(value),
             &ZOO_OPEN_ACL_UNSAFE, ZOO_EPHEMERAL, NULL, 0);
-        if (rc) {
+        if (rc != ZOK) {
             cout << "NZooKeeper::createNode --> zoo_create() path=" << path << "," << zerror(rc);
+        }
+    }
+
+    void NZooKeeper::asyncCreateNode(string const& path, char const* value, StringCompletionType const& callback)
+    {
+        StringCompletionCallback = callback;
+        int rc = zoo_acreate(m_ZkHandle, path.c_str(), value, sizeof(value),
+            &ZOO_OPEN_ACL_UNSAFE, ZOO_EPHEMERAL, asyncCompletion, this);
+        if (rc != ZOK) {
+            cout << "NZooKeeper::asyncCreateNode --> zoo_acreate() path=" << path << "," << zerror(rc);
         }
     }
 

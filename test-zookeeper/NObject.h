@@ -10,9 +10,10 @@
 #include <string>
 #include <iostream>
 #include <memory>
-#include<sstream>
+#include <sstream>
+#include <functional>
+#include <cassert>
 
-using namespace boost;
 using namespace std;
 
 namespace Nux {

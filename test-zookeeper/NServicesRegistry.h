@@ -11,7 +11,7 @@
 #include "NThreadObject.h"
 #include "NZooKeeper.h"
 #include "NZooKeeperWatcher.h"
-#include "NServerConfig.h"
+#include "NServerConfigInfo.h"
 
 using namespace std;
 
@@ -25,12 +25,14 @@ namespace Nux {
     public:
         NServicesRegistry(){};
         NServicesRegistry(string const& hostPort, int timeout)
-            : m_ServerConfig(hostPort, timeout)
-            , m_IsConnected(false) {};
+            : m_ServerConfigInfo(hostPort, timeout)
+            , m_IsConnected(false)
+            , m_RetryNums(0) {};
 
-        void publishService();
+        void publishService(function<void()> const& callback);
         void run();
-        void connectToZooKeeper();
+        void connectToZooKeeper(function<void()> const& onConnectionCallback);
+        void reconnectToZooKeeper(function<void()> const& onConnectionCallback);
 
         // callback function when the state is changed
         void onSessionExpired(WatcherEvent const& event) override {
@@ -39,7 +41,11 @@ namespace Nux {
         }
         void onConnectionEstablished(WatcherEvent const& event) override {
             ZooKeeperWatcher::onConnectionEstablished(event);
+            m_RetryNums = 0;
             m_IsConnected = true;
+            if (m_OnConnectionCallback) {
+                m_OnConnectionCallback();
+            }
         }
         void onConnectionLost(WatcherEvent const& event) override {
             ZooKeeperWatcher::onConnectionLost(event);
@@ -47,15 +53,17 @@ namespace Nux {
         }
         void onNodeValueChanged(WatcherEvent const& event) override {}
         void onNodeDeleted(WatcherEvent const& event) override {}
-        void onChildChanged(WatcherEvent const& event) override {}
+        void onChildChanged(WatcherEvent const& event) override;
 
     private:
         string NServicesRegistry::makeNode();
 
     private:
         shared_ptr<NZooKeeper> m_ZooKeeper;
-        NServerConfig m_ServerConfig;
+        NServerConfigInfo m_ServerConfigInfo;
         bool m_IsConnected;
+        int  m_RetryNums;
+        function<void()>  m_OnConnectionCallback;
     };
 
 }
