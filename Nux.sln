@@ -5,6 +5,16 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Nux", "Nux\Nux.vcxproj", "{153FA64F-FFBF-45E4-8C90-22A1EA70F490}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client-test-thrift", "test\client-test-thrift\client-test-thrift.vcxproj", "{8ECE89F7-A09E-4F93-8091-9AC37BBD4028}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "thrift", "thrift\thrift.vcxproj", "{352DFDDB-B8EA-4B11-8FCA-DCD1E2E17A57}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zlib", "zlib\zlib.vcxproj", "{31D944B3-DAD7-4DC3-AB1B-EEC7DAFB079C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "openssl", "openssl\openssl.vcxproj", "{1FA68097-65E6-4679-A446-D81043A25F74}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test-zookeeper", "test-zookeeper\test-zookeeper.vcxproj", "{9284A9C3-6867-47AD-A343-3D3BBA091165}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -15,6 +25,26 @@ Global
 		{153FA64F-FFBF-45E4-8C90-22A1EA70F490}.Debug|Win32.Build.0 = Debug|Win32
 		{153FA64F-FFBF-45E4-8C90-22A1EA70F490}.Release|Win32.ActiveCfg = Release|Win32
 		{153FA64F-FFBF-45E4-8C90-22A1EA70F490}.Release|Win32.Build.0 = Release|Win32
+		{8ECE89F7-A09E-4F93-8091-9AC37BBD4028}.Debug|Win32.ActiveCfg = Debug|Win32
+		{8ECE89F7-A09E-4F93-8091-9AC37BBD4028}.Debug|Win32.Build.0 = Debug|Win32
+		{8ECE89F7-A09E-4F93-8091-9AC37BBD4028}.Release|Win32.ActiveCfg = Release|Win32
+		{8ECE89F7-A09E-4F93-8091-9AC37BBD4028}.Release|Win32.Build.0 = Release|Win32
+		{352DFDDB-B8EA-4B11-8FCA-DCD1E2E17A57}.Debug|Win32.ActiveCfg = Debug|Win32
+		{352DFDDB-B8EA-4B11-8FCA-DCD1E2E17A57}.Debug|Win32.Build.0 = Debug|Win32
+		{352DFDDB-B8EA-4B11-8FCA-DCD1E2E17A57}.Release|Win32.ActiveCfg = Release|Win32
+		{352DFDDB-B8EA-4B11-8FCA-DCD1E2E17A57}.Release|Win32.Build.0 = Release|Win32
+		{31D944B3-DAD7-4DC3-AB1B-EEC7DAFB079C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{31D944B3-DAD7-4DC3-AB1B-EEC7DAFB079C}.Debug|Win32.Build.0 = Debug|Win32
+		{31D944B3-DAD7-4DC3-AB1B-EEC7DAFB079C}.Release|Win32.ActiveCfg = Release|Win32
+		{31D944B3-DAD7-4DC3-AB1B-EEC7DAFB079C}.Release|Win32.Build.0 = Release|Win32
+		{1FA68097-65E6-4679-A446-D81043A25F74}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1FA68097-65E6-4679-A446-D81043A25F74}.Debug|Win32.Build.0 = Debug|Win32
+		{1FA68097-65E6-4679-A446-D81043A25F74}.Release|Win32.ActiveCfg = Release|Win32
+		{1FA68097-65E6-4679-A446-D81043A25F74}.Release|Win32.Build.0 = Release|Win32
+		{9284A9C3-6867-47AD-A343-3D3BBA091165}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9284A9C3-6867-47AD-A343-3D3BBA091165}.Debug|Win32.Build.0 = Debug|Win32
+		{9284A9C3-6867-47AD-A343-3D3BBA091165}.Release|Win32.ActiveCfg = Release|Win32
+		{9284A9C3-6867-47AD-A343-3D3BBA091165}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

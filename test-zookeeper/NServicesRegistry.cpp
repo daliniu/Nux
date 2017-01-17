@@ -22,7 +22,7 @@ namespace Nux {
     }
 
     void NServicesRegistry::connectToZooKeeper(function<void()> const& callback) {
-        cout << "connectToZooKeeper|" << m_IsConnected << "|" << m_RetryNums << endl;
+        cout << "connectToZooKeeper|m_IsConnected:" << m_IsConnected << "|m_RetryNums:" << m_RetryNums << endl;
         if (m_IsConnected) {
             return;
         }
@@ -35,7 +35,7 @@ namespace Nux {
     }
 
     void NServicesRegistry::reconnectToZooKeeper(function<void()> const& callback) {
-        cout << "reconnectToZooKeeper|" << m_IsConnected << "|" << m_RetryNums << endl;
+        cout << "reconnectToZooKeeper|m_IsConnected:" << m_IsConnected << "|m_RetryNums:" << m_RetryNums << endl;
         connectToZooKeeper([this, callback]() {
             publishService(callback);
         });
