@@ -39,7 +39,6 @@ namespace Nux {
     class NVirtualThreadObject:  public Super_
     {
     private:
-        NThreadObject(){};
         /*
         * Implementations of the *_virt() functions, to call the subclass's
         * non-virtual implementation function.

@@ -51,7 +51,11 @@ namespace Nux {
         if (!m_IsConnected) {
             return;
 	    }
-        m_ZooKeeper->asyncCreateNode(makeNode(), NServerConfigInfo::getIp().c_str(), callback);
+        m_ZooKeeper->asyncCreateNode(makeNode(), NServerConfigInfo::getIp().c_str(), [callback](int rc, char const* data) {
+            if (callback) {
+                callback();
+            }
+        });
     }
 
     void NServicesRegistry::run() {

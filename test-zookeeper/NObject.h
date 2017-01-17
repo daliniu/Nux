@@ -20,7 +20,7 @@ namespace Nux {
 
     class NObject {
     public:
-        string const& toString() { return ""; }
+        string const toString() { return ""; }
     };
 }
 #endif

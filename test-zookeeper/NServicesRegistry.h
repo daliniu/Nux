@@ -6,6 +6,7 @@
 
 #ifndef NUX_SERVICES_REGISTRY_H_
 #define NUX_SERVICES_REGISTRY_H_
+#include <unistd.h>
 #include <zookeeper/zookeeper.h>
 #include <zookeeper/zookeeper_log.h>
 #include "NThreadObject.h"
@@ -56,7 +57,7 @@ namespace Nux {
         void onChildChanged(WatcherEvent const& event) override;
 
     private:
-        string NServicesRegistry::makeNode();
+        string makeNode();
 
     private:
         shared_ptr<NZooKeeper> m_ZooKeeper;

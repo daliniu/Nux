@@ -22,6 +22,8 @@ namespace Nux {
     typedef function<void (int, String_vector const*)>                  StringsStatCompletionType;
     typedef function<void (int)>                                        VoidCompletionType;
 
+    void activeWatcher(zhandle_t *zh, int type, int state, const char *path, void* ctx);
+
     /*
     *
     */
@@ -30,7 +32,7 @@ namespace Nux {
         NZooKeeper()  {
         }
 
-        NZooKeeper::NZooKeeper(string const& hostPort, int timeout, NObject* obj)
+        NZooKeeper(string const& hostPort, int timeout, NObject* obj)
             : m_HostPort(hostPort)
             , m_Timeout(timeout)
             , m_Object(obj) {
@@ -41,7 +43,7 @@ namespace Nux {
             cout << "NZooKeeper()" << endl;
         }
 
-        NZooKeeper::~NZooKeeper() {
+        ~NZooKeeper() {
             cout << "~NZooKeeper()" << endl;
             zookeeper_close(m_ZkHandle);
         }
