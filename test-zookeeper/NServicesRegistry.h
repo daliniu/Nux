@@ -57,7 +57,8 @@ namespace Nux {
         void onChildChanged(WatcherEvent const& event) override;
 
     private:
-        string makeNode();
+        string makeNodePath();
+        string makeNodeValue();
 
     private:
         shared_ptr<NZooKeeper> m_ZooKeeper;

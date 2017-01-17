@@ -4,6 +4,7 @@
 namespace Nux {
     void NServicesRegistry::onChildChanged(WatcherEvent const& event) {
         // get the child data
+        cout <<"NServicesRegistry::onChildChanged"<<endl;
         function<void()> onConnectionCallback = bind(&NZooKeeper::asyncGetChildren, m_ZooKeeper, NServerConfigInfo::getRootNode(), 
             [](int retCode, String_vector const* stringVectors) {
             // update data
@@ -22,7 +23,7 @@ namespace Nux {
     }
 
     void NServicesRegistry::connectToZooKeeper(function<void()> const& callback) {
-        cout << "connectToZooKeeper|" << m_IsConnected << "|" << m_RetryNums << endl;
+        cout << "connectToZooKeeper|m_IsConnected:" << m_IsConnected << "|m_RetryNums:" << m_RetryNums << endl;
         if (m_IsConnected) {
             return;
         }
@@ -35,15 +36,21 @@ namespace Nux {
     }
 
     void NServicesRegistry::reconnectToZooKeeper(function<void()> const& callback) {
-        cout << "reconnectToZooKeeper|" << m_IsConnected << "|" << m_RetryNums << endl;
+        cout << "reconnectToZooKeeper|m_IsConnected:" << m_IsConnected << "|m_RetryNums:" << m_RetryNums << endl;
         connectToZooKeeper([this, callback]() {
             publishService(callback);
         });
     }
 
-    string NServicesRegistry::makeNode() {
+    string NServicesRegistry::makeNodePath() {
         stringstream serverPath;
-        serverPath << NServerConfigInfo::getRootNode() << "/" << NServerConfigInfo::getIndex() << "/" << NServerConfigInfo::getIp() << ":" << NServerConfigInfo::getPort();
+        serverPath << "/" << NServerConfigInfo::getRootNode() << "/" << NServerConfigInfo::getIndex();
+        return serverPath.str();
+    }
+
+    string NServicesRegistry::makeNodeValue() {
+        stringstream serverPath;
+        serverPath << NServerConfigInfo::getIp() << ":" << NServerConfigInfo::getPort();
         return serverPath.str();
     }
 
@@ -51,7 +58,8 @@ namespace Nux {
         if (!m_IsConnected) {
             return;
 	    }
-        m_ZooKeeper->asyncCreateNode(makeNode(), NServerConfigInfo::getIp().c_str(), [callback](int rc, char const* data) {
+        m_ZooKeeper->asyncCreateNode(makeNodePath(), makeNodeValue().c_str(), [callback](int rc, char const* data) {
+            cout << "NServicesRegistry::asyncCreateNode callback rc="<< rc << ",data=" << data <<endl;
             if (callback) {
                 callback();
             }
@@ -61,7 +69,9 @@ namespace Nux {
     void NServicesRegistry::run() {
 	    while (true) {
 		    cout<<"publish service"<<endl;
-            reconnectToZooKeeper(nullptr);
+            reconnectToZooKeeper([]() {
+                cout<< "asyncCreateNode success"<<endl;
+            });
 		    sleep(10);
 	    }
     }
