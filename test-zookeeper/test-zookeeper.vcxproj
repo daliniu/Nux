@@ -76,7 +76,7 @@
     <ClInclude Include="DataMonitor.h" />
     <ClInclude Include="Executor.h" />
     <ClInclude Include="NObject.h" />
-    <ClInclude Include="NServerConfig.h" />
+    <ClInclude Include="NServerConfigInfo.h" />
     <ClInclude Include="NServicesRegistry.h" />
     <ClInclude Include="NThreadObject.h" />
     <ClInclude Include="NZooKeeper.h" />
@@ -85,6 +85,7 @@
   <ItemGroup>
     <ClCompile Include="DataMonitor.cpp" />
     <ClCompile Include="Executor.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="NServerConfig.cpp" />
     <ClCompile Include="NServicesRegistry.cpp" />
     <ClCompile Include="test.cpp" />

@@ -125,7 +125,7 @@ namespace Nux {
         int rc = zoo_acreate(m_ZkHandle, path.c_str(), value, sizeof(value),
             &ZOO_OPEN_ACL_UNSAFE, ZOO_EPHEMERAL, asyncCompletion, this);
         if (rc != ZOK) {
-            cout << "NZooKeeper::asyncCreateNode --> zoo_create() path=" << path << ",value=" << value << ",reason=" << zerror(rc) << endl;
+            cout << "NZooKeeper::asyncCreateNode --> zoo_acreate() path=" << path << ",value=" << value << ",reason=" << zerror(rc) << endl;
         }
     }
 
@@ -135,7 +135,7 @@ namespace Nux {
         String_vector str_vec;
         int ret = zoo_wget_children(m_ZkHandle, path.c_str(), activeWatcher, m_Object, &str_vec);
         if (ret) {
-            cout << "Update --> read path:" << path << ",reason=" << zerror(ret) << endl;
+            cout << "getChildren --> read path:" << path << " reason=" << zerror(ret) << endl;
         }
         return str_vec;
     }
@@ -147,7 +147,7 @@ namespace Nux {
             activeWatcher, m_Object,
             asyncCompletion, this);
         if (ZOK != ret) {
-            cout << "Async Update --> read path:" << path << ",reason=" << zerror(ret) << endl;
+            cout << "NZooKeeper::asyncGetChildren --> read path=" << path << ",reason=" << zerror(ret) << endl;
         }
     }
 }
