@@ -112,6 +112,8 @@ namespace Nux {
 
     void NZooKeeper::createNode(string const& path, char const* value)
     {
+        zoo_set_context(m_ZkHandle, m_Object);
+        zoo_set_watcher(m_ZkHandle, activeWatcher);
         int rc = zoo_create(m_ZkHandle, path.c_str(), value, sizeof(value),
             &ZOO_OPEN_ACL_UNSAFE, ZOO_EPHEMERAL, NULL, 0);
         if (rc != ZOK) {

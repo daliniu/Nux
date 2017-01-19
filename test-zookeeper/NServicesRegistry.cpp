@@ -65,6 +65,15 @@ namespace Nux {
             }
         });
     }
+/*
+    void NServicesRegistry::publishService(function<void()> const& callback) {
+        if (!m_IsConnected) {
+            return;
+	    }
+        m_ZooKeeper->createNode(makeNodePath(), makeNodeValue().c_str());
+        callback();
+    }
+*/
 
     void NServicesRegistry::run() {
 	    while (true) {

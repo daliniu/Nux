@@ -49,6 +49,7 @@ namespace Nux {
         }
 
         void createNode(string const& path, char const* value);
+        //void setWatcher();
         String_vector getChildren(string const& path);
         void asyncGetChildren(string const& path, StringsStatCompletionType const& callback);  // lambda expr
         void asyncCreateNode(string const& path, char const* value, StringCompletionType const& callback); 
