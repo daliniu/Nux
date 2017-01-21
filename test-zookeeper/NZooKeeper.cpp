@@ -67,6 +67,7 @@ namespace Nux {
 
     // *****************************************************************************
     // watcher action implementation
+    // one watcher one trigger 
     void activeWatcher(zhandle_t *zh,
         int type, int state, const char *path, void* ctx) {
 
@@ -127,7 +128,9 @@ namespace Nux {
         int rc = zoo_acreate(m_ZkHandle, path.c_str(), value, sizeof(value),
             &ZOO_OPEN_ACL_UNSAFE, ZOO_EPHEMERAL, asyncCompletion, this);
         if (rc != ZOK) {
-            cout << "NZooKeeper::asyncCreateNode --> zoo_acreate() path=" << path << ",value=" << value << ",reason=" << zerror(rc) << endl;
+            string errMsg = "NZooKeeper::asyncCreateNode --> zoo_acreate() path=" + path + ",value=" + value + ",reason=" + zerror(rc);
+            cout << errMsg << endl;
+            //throw NException(errMsg);
         }
     }
 

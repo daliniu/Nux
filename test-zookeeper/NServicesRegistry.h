@@ -28,17 +28,20 @@ namespace Nux {
         NServicesRegistry(string const& hostPort, int timeout)
             : m_ServerConfigInfo(hostPort, timeout)
             , m_IsConnected(false)
+            , m_IsNodeCreated(false)
             , m_RetryNums(0) {};
 
         void publishService(function<void()> const& callback);
         void run();
         void connectToZooKeeper(function<void()> const& onConnectionCallback);
         void reconnectToZooKeeper(function<void()> const& onConnectionCallback);
+        void update();
 
         // callback function when the state is changed
         void onSessionExpired(WatcherEvent const& event) override {
             ZooKeeperWatcher::onSessionExpired(event);
             m_IsConnected = false;
+            m_IsNodeCreated = false;
         }
         void onConnectionEstablished(WatcherEvent const& event) override {
             ZooKeeperWatcher::onConnectionEstablished(event);
@@ -51,6 +54,7 @@ namespace Nux {
         void onConnectionLost(WatcherEvent const& event) override {
             ZooKeeperWatcher::onConnectionLost(event);
             m_IsConnected = false;
+            m_IsNodeCreated = false;
         }
         void onNodeValueChanged(WatcherEvent const& event) override {}
         void onNodeDeleted(WatcherEvent const& event) override {}
@@ -64,6 +68,7 @@ namespace Nux {
         shared_ptr<NZooKeeper> m_ZooKeeper;
         NServerConfigInfo m_ServerConfigInfo;
         bool m_IsConnected;
+        bool m_IsNodeCreated;
         int  m_RetryNums;
         function<void()>  m_OnConnectionCallback;
     };
