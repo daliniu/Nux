@@ -47,7 +47,7 @@ namespace Nux {
 
     string NServicesRegistry::makeNodePath() {
         stringstream serverPath;
-        serverPath << "/" << NServerConfigInfo::getRootNode() << "/" << NServerConfigInfo::getIndex();
+        serverPath << NServerConfigInfo::getRootNode() << "/" << NServerConfigInfo::getIndex();
         return serverPath.str();
     }
 

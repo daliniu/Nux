@@ -26,7 +26,7 @@ namespace Nux {
         string getHostPort() const       { return m_HostPort; }
         int    getTimeout() const        { return m_Timeout; }
         static string getIp()            { return "127.0.0.1"; }
-        static string getRootNode()      { return "config_root"; }
+        static string getRootNode()      { return "/config_root"; }
         static int    getPort()          { return 8080; }
         static int    getIndex()         { return 1; }
         static int    getMaxRetryNum()   { return 10; }
