@@ -66,7 +66,7 @@ namespace Nux {
         string makeNodeValue();
 
     private:
-        shared_ptr<NZooKeeper> m_ZooKeeper;
+        std::shared_ptr<NZooKeeper> m_ZooKeeper;
         NServerConfigInfo m_ServerConfigInfo;
         bool m_IsConnected;
         bool m_IsNodeCreated;

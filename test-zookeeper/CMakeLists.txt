@@ -36,6 +36,8 @@ set(nuxcpp_SOURCES
 add_library(nuxcpp STATIC ${nuxcpp_SOURCES})
 #LINK_AGAINST_THRIFT_LIBRARY(tutorialgencpp thrift)
 target_link_libraries(nuxcpp zookeeper_mt)
+target_link_libraries(nuxcpp boost_system)
+target_link_libraries(nuxcpp boost_filesystem)
 
 add_executable(mainTest main.cpp)
 target_link_libraries(mainTest nuxcpp)
