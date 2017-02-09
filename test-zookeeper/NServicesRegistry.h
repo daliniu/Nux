@@ -60,6 +60,7 @@ namespace Nux {
         void onNodeDeleted(WatcherEvent const& event) override {}
         void onChildChanged(WatcherEvent const& event) override;
 
+        
     private:
         string makeNodePath();
         string makeNodeValue();

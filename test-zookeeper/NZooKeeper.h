@@ -10,7 +10,9 @@
 #include <zookeeper/zookeeper_log.h>
 #include "NObject.h"
 #include "NZooKeeperWatcher.h"
+#include <boost/pool/object_pool.hpp>    
 
+using namespace boost;
 using namespace std;
 
 namespace Nux {
@@ -23,6 +25,18 @@ namespace Nux {
     typedef function<void (int)>                                        VoidCompletionType;
 
     void activeWatcher(zhandle_t *zh, int type, int state, const char *path, void* ctx);
+
+    class NCallbackWraper : public NObject
+    {
+    public:
+        object_pool<NCallbackWraper>*  pools;
+        AclCompletionType         AclCompletionCallback;
+        DataCompletionType        DataCompletionCallback;
+        StatCompletionType        StatCompletionCallback;
+        StringCompletionType      StringCompletionCallback;
+        StringsStatCompletionType StringsCompletionCallback;
+        VoidCompletionType        VoidCompletionCallback;
+    };
 
     /*
     *
@@ -54,19 +68,12 @@ namespace Nux {
         void asyncGetChildren(string const& path, StringsStatCompletionType const& callback);  // lambda expr
         void asyncCreateNode(string const& path, char const* value, StringCompletionType const& callback); 
         
-        // callfunction interface
-        AclCompletionType         AclCompletionCallback;
-        DataCompletionType        DataCompletionCallback; 
-        StatCompletionType        StatCompletionCallback;
-        StringCompletionType      StringCompletionCallback;
-        StringsStatCompletionType StringsCompletionCallback;
-        VoidCompletionType        VoidCompletionCallback;
-
     private:
         string     m_HostPort;
         int        m_Timeout;
         NObject*   m_Object;
         zhandle_t* m_ZkHandle;
+        object_pool<NCallbackWraper> m_PoolCallback;
     };
 
 }
