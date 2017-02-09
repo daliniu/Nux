@@ -70,6 +70,7 @@ namespace Nux {
                     callback();
                 }
             });
+
             return;
 	    }
         if (callback) {

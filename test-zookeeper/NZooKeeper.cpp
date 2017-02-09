@@ -6,63 +6,69 @@ namespace Nux {
     // a set of async completion signatures
     void asyncCompletion(int rc, ACL_vector *acl, Stat *stat, const void *data){
         assert("Completion data is NULL"&&data);
-        NZooKeeper* s = static_cast<NZooKeeper*>((void*)data);
+        NCallbackWraper* s = static_cast<NCallbackWraper*>((void*)data);
         if (nullptr == s) {
             cout << "asyncCompletion error" << endl;
             return;
         }
         s->AclCompletionCallback(rc, acl, stat);
+        s->pools->free(s);
     }
 
     void asyncCompletion(int rc, const char *value, int len, const Stat *stat,
         const void *data) {
         assert("Completion data is NULL"&&data);
-        NZooKeeper* s = static_cast<NZooKeeper*>((void*)data);
+        NCallbackWraper* s = static_cast<NCallbackWraper*>((void*)data);
         if (nullptr == s) {
             cout << "asyncCompletion error" << endl;
             return;
         }
         s->DataCompletionCallback(rc, value, len, stat);
+        s->pools->free(s);
     }
 
     void asyncCompletion(int rc, const Stat *stat, const void *data) {
         assert("Completion data is NULL"&&data);
-        NZooKeeper* s = static_cast<NZooKeeper*>((void*)data);
+        NCallbackWraper* s = static_cast<NCallbackWraper*>((void*)data);
         if (nullptr == s) {
             cout << "asyncCompletion error" << endl;
             return;
         }
         s->StatCompletionCallback(rc, stat);
+        s->pools->free(s);
     }
 
     void asyncCompletion(int rc, const char *value, const void *data) {
         assert("Completion data is NULL"&&data);
-        NZooKeeper* s = static_cast<NZooKeeper*>((void*)data);
+        NCallbackWraper* s = static_cast<NCallbackWraper*>((void*)data);
         if (nullptr == s) {
             cout << "asyncCompletion error" << endl;
             return;
         }
         s->StringCompletionCallback(rc, value);
+        s->pools->free(s);
     }
 
     void asyncCompletion(int rc, const String_vector *strings, const void *data) {
         assert("Completion data is NULL"&&data);
-        NZooKeeper* s = static_cast<NZooKeeper*>((void*)data);
+        NCallbackWraper* s = static_cast<NCallbackWraper*>((void*)data);
         if (nullptr == s) {
             cout << "asyncCompletion error" << endl;
             return;
         }
         s->StringsCompletionCallback(rc, strings);
+        s->pools->free(s);
     }
 
     void asyncCompletion(int rc, const void *data) {
         assert("Completion data is NULL"&&data);
-        NZooKeeper* s = static_cast<NZooKeeper*>((void*)data);
+        NCallbackWraper* s = static_cast<NCallbackWraper*>((void*)data);
         if (nullptr == s) {
             cout << "asyncCompletion error" << endl;
             return;
         }
         s->VoidCompletionCallback(rc);
+        s->pools->free(s);
     }
 
     // *****************************************************************************
@@ -124,9 +130,11 @@ namespace Nux {
 
     void NZooKeeper::asyncCreateNode(string const& path, char const* value, StringCompletionType const& callback)
     {
-        StringCompletionCallback = callback;
+        NCallbackWraper* callbackWraper = m_PoolCallback.malloc();
+        callbackWraper->pools = &m_PoolCallback;
+        callbackWraper->StringCompletionCallback = callback;
         int rc = zoo_acreate(m_ZkHandle, path.c_str(), value, sizeof(value),
-            &ZOO_OPEN_ACL_UNSAFE, ZOO_EPHEMERAL, asyncCompletion, this);
+            &ZOO_OPEN_ACL_UNSAFE, ZOO_EPHEMERAL, asyncCompletion, callbackWraper);
         if (rc != ZOK) {
             string errMsg = "NZooKeeper::asyncCreateNode --> zoo_acreate() path=" + path + ",value=" + value + ",reason=" + zerror(rc);
             cout << errMsg << endl;
@@ -147,10 +155,12 @@ namespace Nux {
 
     void NZooKeeper::asyncGetChildren(string const& path, StringsStatCompletionType const& callback)
     {
-        StringsCompletionCallback = callback;
+        NCallbackWraper* callbackWraper = m_PoolCallback.malloc();
+        callbackWraper->pools = &m_PoolCallback;
+        callbackWraper->StringsCompletionCallback = callback;
         int ret = zoo_awget_children(m_ZkHandle, path.c_str(),
             activeWatcher, m_Object,
-            asyncCompletion, this);
+            asyncCompletion, callbackWraper);
         if (ZOK != ret) {
             cout << "NZooKeeper::asyncGetChildren --> read path=" << path << ",reason=" << zerror(ret) << endl;
         }
