@@ -67,6 +67,7 @@ namespace Nux {
         String_vector getChildren(string const& path);
         void asyncGetChildren(string const& path, StringsStatCompletionType const& callback);  // lambda expr
         void asyncCreateNode(string const& path, char const* value, StringCompletionType const& callback); 
+        void asyncGetValue(string const& path, DataCompletionType const& callback);
         
     private:
         string     m_HostPort;

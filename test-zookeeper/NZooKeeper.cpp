@@ -165,4 +165,18 @@ namespace Nux {
             cout << "NZooKeeper::asyncGetChildren --> read path=" << path << ",reason=" << zerror(ret) << endl;
         }
     }
+
+    void NZooKeeper::asyncGetValue(string const& path, DataCompletionType const& callback)
+    {
+        NCallbackWraper* callbackWraper = m_PoolCallback.malloc();
+        callbackWraper->pools = &m_PoolCallback;
+        callbackWraper->DataCompletionCallback = callback;
+        int ret = zoo_awget(m_ZkHandle, path.c_str(),
+            activeWatcher, m_Object,
+            asyncCompletion, callbackWraper);
+        if (ZOK != ret) {
+            cout << "NZooKeeper::asyncGetValue --> read path=" << path << ",reason=" << zerror(ret) << endl;
+        }
+
+    }
 }

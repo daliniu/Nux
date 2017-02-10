@@ -82,7 +82,7 @@ namespace Nux {
         cout << "NServicesRegistry::Update" << endl;
         reconnectToZooKeeper([this]() {
             this->m_ZooKeeper->asyncGetChildren(NServerConfigInfo::getRootNode(),
-                [](int retCode, String_vector const* stringVectors) {
+                [this](int retCode, String_vector const* stringVectors) {
                 if (retCode != ZOK) {
                     cout << "NServicesRegistry::update callback retCode=" << zerror(retCode) << endl;
                     return;
@@ -92,6 +92,9 @@ namespace Nux {
                 for (int i = 0; i < stringVectors->count; ++i) {
                     struct String_vector node_vec;
                     string path = NServerConfigInfo::getRootNode() + "/" + stringVectors->data[i];
+                    m_ZooKeeper->asyncGetValue(path, [](int retCode, char const* data, int len, Stat const* stat){
+                        cout << "asyncGetValue retCode="<<retCode<<", value=" << data << ", len=" << len << endl;
+                    });
                     cout << "NServicesRegistry::update path=" << path << endl;
                 }
             });
